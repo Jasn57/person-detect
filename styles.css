@@ -19,8 +19,8 @@ body {
   background-color: rgba(0, 255, 0, 0.5); 
   z-index: 2;
   display: none;
-  width: 200px;  
-  height: 200px; 
-  top: 10%;   
-  left: 10%;  
+  width: 200px;   
+  height: 200px;  
+  top: 10%;       
+  right: 10%;    
 }

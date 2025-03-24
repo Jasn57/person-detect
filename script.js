@@ -33,9 +33,9 @@ async function detectPerson(model) {
       highlightElement.style.height = `${height}px`;
       highlightElement.style.left = `${x}px`;
       highlightElement.style.top = `${y}px`;
-      highlightElement.style.display = 'block';
+      highlightElement.style.display = 'block';  
     } else {
-      highlightElement.style.display = 'none';
+      highlightElement.style.display = 'none';  
     }
   } catch (error) {
     console.error('Error during detection:', error);

@@ -8,8 +8,8 @@ body {
   }
   
   #videoElement {
-    display: block; 
-    border: 2px solid white; 
+    display: block;
+    border: 2px solid white;
   }
   
   canvas {

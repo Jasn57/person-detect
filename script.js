@@ -31,17 +31,29 @@ document.addEventListener('DOMContentLoaded', async function () {
   };
 
   async function detectPerson() {
-    const segmentation = await net.segmentPerson(video);
+    
+    if (net && video && video.readyState === 4) { 
+      const segmentation = await net.segmentPerson(video);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+     
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const personDetected = segmentation.allPoses.length > 0 && segmentation.allPoses[0].keypoints.length > 0;
+    
+      const personDetected = segmentation.allPoses.length > 0 && segmentation.allPoses[0].keypoints.length > 0;
 
-    if (personDetected) {
-      background.style.backgroundColor = 'red';
-    } else {
-      background.style.backgroundColor = 'transparent'; 
+      if (personDetected) {
+        background.style.backgroundColor = 'red';
+      } else {
+        background.style.backgroundColor = 'transparent';  
+      }
+
+      bodyPix.drawMask(canvas, video, segmentation, 1, 0, false);
+
+      requestAnimationFrame(detectPerson);
     }
+  }
 
-    bodyPix.drawMask(canvas, video, segmentation, 1, 0, false);
-
+  video.onplaying = function () {
+    detectPerson();
+  };
+});

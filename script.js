@@ -1,45 +1,37 @@
-document.addEventListener('DOMContentLoaded', async function () {
-  const video = document.getElementById('videoElement');
-  const background = document.getElementById('background');
+const videoElement = document.getElementById('video');
+const highlightElement = document.getElementById('highlight');
 
-  let net;
-  try {
-    net = await bodyPix.load();
-  } catch (err) {
-    console.error('Error loading BodyPix model:', err);
-    return;
+async function startWebcam() {
+  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  videoElement.srcObject = stream;
+}
+
+async function loadModel() {
+  const model = await cocoSsd.load();
+  detectPerson(model);
+}
+
+async function detectPerson(model) {
+  const predictions = await model.detect(videoElement);
+
+  const person = predictions.find(p => p.class === 'person');
+  if (person) {
+    const [x, y, width, height] = person.bbox;
+    highlightElement.style.width = `${width}px`;
+    highlightElement.style.height = `${height}px`;
+    highlightElement.style.left = `${x}px`;
+    highlightElement.style.top = `${y}px`;
+    highlightElement.style.display = 'block';
+  } else {
+    highlightElement.style.display = 'none';
   }
 
-  async function setupCamera() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      video.srcObject = stream;
-    } catch (err) {
-      console.error('Error accessing camera:', err);
-    }
-  }
+  requestAnimationFrame(() => detectPerson(model));
+}
 
-  setupCamera();
+async function init() {
+  await startWebcam();
+  await loadModel();
+}
 
-  video.onloadedmetadata = function () {};
-
-  async function detectPerson() {
-    if (net && video && video.readyState === 4) { 
-      const segmentation = await net.segmentPerson(video);
-
-      const personDetected = segmentation.allPoses.length > 0 && segmentation.allPoses[0].keypoints.length > 0;
-
-      if (personDetected) {
-        background.style.backgroundColor = 'red';
-      } else {
-        background.style.backgroundColor = 'transparent';
-      }
-    }
-
-    requestAnimationFrame(detectPerson);
-  }
-
-  video.onplaying = function () {
-    detectPerson();
-  };
-});
+init();

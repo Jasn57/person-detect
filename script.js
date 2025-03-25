@@ -28,9 +28,11 @@ async function detectPerson(model) {
 
     const person = predictions.find(p => p.class === 'person');
     if (person) {
-      highlightElement.style.display = 'block'; 
+      document.body.style.backgroundColor = 'green';  
+      highlightElement.style.display = 'block';  
     } else {
-      highlightElement.style.display = 'none';   
+      document.body.style.backgroundColor = '';  
+      highlightElement.style.display = 'none';  
     }
   } catch (error) {
     console.error('Error during detection:', error);

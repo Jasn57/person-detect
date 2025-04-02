@@ -33,7 +33,7 @@ async function detectPerson(model) {
     consoleElement.textContent += 'Predictions: ' + JSON.stringify(predictions, null, 2) + '\n';
 
     const person = predictions.find(p => p.class === 'person');
-    // No background color change here
+    
   } catch (error) {
     console.error('Error during detection:', error);
     consoleElement.textContent += 'Error during detection: ' + error.message + '\n';

@@ -1,31 +1,37 @@
 body {
   margin: 0;
-  overflow: hidden;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  transition: background-color 0.3s ease; 
-  background-color: black;
-  color: white;
+  background-color: rgb(146, 146, 146);
+  flex-direction: column;
 }
 
 #video {
-  position: absolute;
-  width: 80%;   
-  height: auto; 
-  z-index: 1;
-  border-radius: 8px; 
+  border: 2px solid black;
+  width: 80%;
+  max-width: 600px;
 }
 
 #highlight {
-  position: absolute;
-  background-color: rgba(0, 102, 0, 0.5); 
-  z-index: 2;
-  display: none;
-  width: 200px;   
-  height: 200px;  
-  top: 10%;       
-  right: 10%;    
+  margin-top: 20px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  color: black;
+}
+
+#console {
+  margin-top: 20px;
+  font-family: Courier, monospace;
+  color: #333;
+  white-space: pre-wrap;
+  width: 80%;
+  max-width: 600px;
+  height: 200px; 
+  overflow-y: scroll; 
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #d1d1d1;
+  border-radius: 5px;
 }
